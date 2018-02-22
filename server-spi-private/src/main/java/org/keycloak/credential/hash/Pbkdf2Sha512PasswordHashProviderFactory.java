@@ -16,10 +16,11 @@ public class Pbkdf2Sha512PasswordHashProviderFactory implements PasswordHashProv
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA512";
 
     public static final int DEFAULT_ITERATIONS = 30000;
+    public static final int DERIVED_KEY_SIZE = 512;
 
     @Override
     public PasswordHashProvider create(KeycloakSession session) {
-        return new Pbkdf2PasswordHashProvider(ID, PBKDF2_ALGORITHM, DEFAULT_ITERATIONS);
+        return new Pbkdf2PasswordHashProvider(ID, PBKDF2_ALGORITHM, DEFAULT_ITERATIONS, DERIVED_KEY_SIZE);
     }
 
     @Override

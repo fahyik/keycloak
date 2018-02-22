@@ -38,13 +38,13 @@ public class Pbkdf2PasswordHashProvider implements PasswordHashProvider {
 
     private final String pbkdf2Algorithm;
     private int defaultIterations;
-
-    public static final int DERIVED_KEY_SIZE = 512;
-
-    public Pbkdf2PasswordHashProvider(String providerId, String pbkdf2Algorithm, int defaultIterations) {
+    private int derivedKeySize;
+     
+    public Pbkdf2PasswordHashProvider(String providerId, String pbkdf2Algorithm, int defaultIterations, int derivedKeySize) {
         this.providerId = providerId;
         this.pbkdf2Algorithm = pbkdf2Algorithm;
         this.defaultIterations = defaultIterations;
+        this.derivedKeySize = derivedKeySize;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Pbkdf2PasswordHashProvider implements PasswordHashProvider {
     }
 
     private String encode(String rawPassword, int iterations, byte[] salt) {
-        KeySpec spec = new PBEKeySpec(rawPassword.toCharArray(), salt, iterations, DERIVED_KEY_SIZE);
+        KeySpec spec = new PBEKeySpec(rawPassword.toCharArray(), salt, iterations, derivedKeySize);
 
         try {
             byte[] key = getSecretKeyFactory().generateSecret(spec).getEncoded();
